@@ -1,4 +1,4 @@
-* Focus helps you organize and recruit for focus groups.
+# Focus helps you organize and recruit for focus groups.
 
 Focus groups are a type of market research that allows companies to ask people for their opinion on existing, potential or competitive products. Recruiters find normal people that qualify for these focus groups based on comprehensive questionaires called "screeners," and act as one of the many mediums between the companies and the people whose opinions they seek.
 
