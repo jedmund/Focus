@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load url from future %}
+
+{% block title %} / Contacts{% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+        <h1 class="span8">All Contacts</h1>
+        <a class="btn btn-primary span3 offset1 h1-btn add-person-btn" href="{% url 'contacts.views.create' %}">
+            <i class="icon-plus-sign icon-white"></i>&nbsp;Add a person
+        </a>
+    </div>
+
+    <table class="table table-striped table-bordered table-hover table-paddingless">
+        <thead>
+            <tr>
+                <td class="name"><strong>Name</strong></td>
+                <td class="age span1"><strong>Age</strong></td>
+                <td class="phone span2"><strong>Cell Phone</strong></td>
+            </tr>
+        </thead>
+        {% for person in people %}
+                <tr>
+                    <td>
+                        <a href="{% url 'contacts.views.person' person.id %}">{{ person.first_name }} {{ person.last_name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'contacts.views.person' person.id %}">{{ person.age }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'contacts.views.person' person.id %}">{{ person.mobile_phone_no }}</a>
+                    </td>
+                </tr>
+            </a>
+        {% endfor %}
+    </table>
+{% endblock %}

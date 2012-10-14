@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load url from future %}
+
+{% block title %}/ {{ p.first_name }} {{ p.last_name }}{% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+        <h1 class="span8">{{ p.first_name }} {{ p.last_name }}</h1>
+        <a class="btn span2 offset2 h1-btn edit-person-btn" href="{% url 'contacts.views.edit' p.id %}">Edit</a>
+    </div>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <td colspan="2"><strong>Personal Information</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>Age</td>
+            <td>{{ p.age }}</td>
+        <tr>
+            <td>Gender</td>
+            <td>{{ p.gender }}</td>
+        </tr>
+        <tr>
+            <td>Ethnicity</td>
+            <td>{{ p.ethnicity }}</td>
+        </tr>
+    </table>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <td colspan="2"><strong>Work Information</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>Employer</td>
+            <td>{{ p.employer }}</td>
+        <tr>
+            <td>Occupation</td>
+            <td>{{ p.occupation }}</td>
+        </tr>
+    </table>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <td><strong>Contact Information</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>Email Address</td>
+            <td><a href="mailto:{{ p.email }}">{{ p.email }}</a></td>
+        </tr>
+        <tr>
+            <td>Home Phone</td>
+            <td>
+                <a class="visible-desktop" href="callto:{{ p.home_phone_no }}">{{ p.home_phone_no }}</a>
+                <a class="visible-phone visible-tablet" href="tel:{{ p.home_phone_no }}">{{ p.home_phone_no }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Cell Phone</td>
+            <td>
+                <a class="visible-desktop" href="callto:{{ p.mobile_phone_no }}">{{ p.mobile_phone_no }}</a>
+                <a class="visible-phone visible-tablet" href="tel:{{ p.mobile_phone_no }}">{{ p.mobile_phone_no }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Work Phone</td>
+            <td>
+                <a class="visible-desktop" href="callto:{{ p.work_phone_no }}">{{ p.work_phone_no }}</a>
+                <a class="visible-phone visible-tablet" href="tel:{{ p.work_phone_no }}">{{ p.work_phone_no }}</a>
+            </td>
+        </tr>
+    </table>
+{% endblock %}
