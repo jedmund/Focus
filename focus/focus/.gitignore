@@ -1,1 +1,2 @@
-focus/focus/settings.py
+settings.py
+*.pyc
