@@ -1,23 +1,15 @@
+from django.forms import ModelForm
 from django.db import models
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 
 class Person(models.Model):
-
-    # Ethnicity mapping
-    CAUCASIAN        = 'CA'
-    AFRICAN_AMERICAN = 'AA'
-    ASIAN_PACIFIC    = 'AP'
-    HISPANIC         = 'HS'
-    AMERICAN_INDIAN  = 'AI'
-    SUBCONTINENTAL   = 'SA'
-
     ETHNICITY_CHOICES = (
-        (CAUCASIAN,        'Caucasian'),
-        (AFRICAN_AMERICAN, 'African-American'),
-        (ASIAN_PACIFIC,    'Asian/Pacific Islander'),
-        (HISPANIC,         'Hispanic'),
-        (AMERICAN_INDIAN,  'American Indian/Alaskan Native'),
-        (SUBCONTINENTAL,   'Subcontinental Asian')
+        ('Caucasian',                      'Caucasian'),
+        ('African-American',               'African-American'),
+        ('Asian/Pacific Islander',         'Asian/Pacific Islander'),
+        ('Hispanic',                       'Hispanic'),
+        ('American Indian/Alaskan Native', 'American Indian/Alaskan Native'),
+        ('Subcontinental Asian',           'Subcontinental Asian')
     )
 
     # Cellphone mapping
@@ -64,6 +56,14 @@ class Person(models.Model):
         ('Wal-Mart Family Mobile', 'Wal-Mart Family Mobile')
     )
 
+    # Gender
+    MALE   = 1;
+    FEMALE = 2;
+    GENDER_CHOICES = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female')
+    )
+
     # Method mapping
     INTERNAL = 1;
     APPLIED  = 2;
@@ -76,11 +76,12 @@ class Person(models.Model):
 
     first_name = models.CharField(max_length=200)
     last_name  = models.CharField(max_length=200)
+    gender     = models.IntegerField(max_length=2, choices=GENDER_CHOICES, default=MALE)
 
     birthdate  = models.DateField('birthdate')
     occupation = models.CharField(max_length=400, default='', blank=True, null=True)
     employer   = models.CharField(max_length=400, default='', blank=True, null=True)
-    ethnicity  = models.CharField(max_length=40, choices=ETHNICITY_CHOICES, default=CAUCASIAN)
+    ethnicity  = models.CharField(max_length=40, choices=ETHNICITY_CHOICES, default='Caucasian')
 
     email           = models.CharField(max_length=255, default='', blank=True, null=True)
     home_phone_no   = PhoneNumberField('Home Phone #', default='', blank=True, null=True)
@@ -104,3 +105,7 @@ class Person(models.Model):
 
     add_date   = models.DateTimeField('Date added', auto_now_add=True)
     add_method = models.IntegerField('Method', max_length=2, choices=METHOD_CHOICES, default=INTERNAL)
+
+class PersonForm(ModelForm):
+    class Meta:
+        model = Person
