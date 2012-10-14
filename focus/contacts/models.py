@@ -20,6 +20,50 @@ class Person(models.Model):
         (SUBCONTINENTAL,   'Subcontinental Asian')
     )
 
+    # Cellphone mapping
+    CELLPHONE_MAKE = (
+        ('Acer', 'Acer'),
+        ('Apple', 'Apple'),
+        ('BenQ-Siemens', 'BenQ-Siemens'),
+        ('Dell', 'Dell'),
+        ('Ericsson', 'Ericsson'),
+        ('Garmin-Asus', 'Garmin-Asus'),
+        ('HP', 'HP'),
+        ('HTC', 'HTC'),
+        ('Huawei', 'Huawei'),
+        ('Kyocera', 'Kyocera'),
+        ('LG', 'LG'),
+        ('Meizu', 'Meizu'),
+        ('Motorola', 'Motorola'),
+        ('Nokia', 'Nokia'),
+        ('Palm', 'Palm'),
+        ('Panasonic', 'Panasonic'),
+        ('Philips', 'Philips'),
+        ('RIM', 'RIM'),
+        ('Samsung', 'Samsung'),
+        ('Sharp', 'Sharp'),
+        ('Siemens', 'Siemens'),
+        ('Sony', 'Sony'),
+        ('Sony Ericsson', 'Sony Ericsson'),
+        ('Toshiba', 'Toshiba'),
+        ('ViewSonic', 'ViewSonic'),
+    )
+
+    CELLPHONE_PROVIDER = (
+        ('AT&T Mobility', 'AT&T Mobility'),
+        ('Verizon Wireless', 'Verizon Wireless'),
+        ('Sprint Nextel', 'Sprint Nextel'),
+        ('T-Mobile USA', 'T-Mobile USA'),
+        ('TracFone Wireless', 'TracFone Wireless'),
+        ('MetroPCS', 'MetroPCS'),
+        ('Cricket Wireless', 'Cricket Wireless'),
+        ('U.S. Cellular', 'U.S. Cellular'),
+        ('Virgin Mobile USA', 'Virgin Mobile USA'),
+        ('Boost Mobile', 'Boost Mobile'),
+        ('Clear Talk', 'Clear Talk'),
+        ('Wal-Mart Family Mobile', 'Wal-Mart Family Mobile')
+    )
+
     # Method mapping
     INTERNAL = 1;
     APPLIED  = 2;
@@ -34,14 +78,24 @@ class Person(models.Model):
     last_name  = models.CharField(max_length=200)
 
     birthdate  = models.DateField('birthdate')
-    occupation = models.CharField(max_length=400, blank=True, null=True)
-    employer   = models.CharField(max_length=400, blank=True, null=True)
+    occupation = models.CharField(max_length=400, default='', blank=True, null=True)
+    employer   = models.CharField(max_length=400, default='', blank=True, null=True)
     ethnicity  = models.CharField(max_length=40, choices=ETHNICITY_CHOICES, default=CAUCASIAN)
 
-    email           = models.CharField(max_length=255, blank=True, null=True)
-    home_phone_no   = PhoneNumberField(models.CharField('Home Phone #', blank=True, null=True))
-    mobile_phone_no = PhoneNumberField(models.CharField('Mobile Phone #', blank=True, null=True))
-    work_phone_no   = PhoneNumberField(models.CharField('Work Phone #', blank=True, null=True))
+    email           = models.CharField(max_length=255, default='', blank=True, null=True)
+    home_phone_no   = PhoneNumberField('Home Phone #', default='', blank=True, null=True)
+    mobile_phone_no = PhoneNumberField('Mobile Phone #', default='', blank=True, null=True)
+    work_phone_no   = PhoneNumberField('Work Phone #', default='', blank=True, null=True)
+
+    cell_make       = models.CharField('Cellphone Make', max_length=255,
+                                        choices=CELLPHONE_MAKE, blank=True, null=True)
+    cell_model      = models.CharField('Cellphone Model', max_length=255, blank=True, null=True)
+    cell_provider   = models.CharField('Cellphone Provider', max_length=255,
+                                        choices=CELLPHONE_PROVIDER, blank=True, null=True)
+
+    car_make        = models.CharField('Car Make', max_length=255, blank=True, null=True)
+    car_model       = models.CharField('Car Model', max_length=255, blank=True, null=True)
+    car_year        = models.IntegerField('Car Year', max_length=4, blank=True, null=True)
 
     city  = models.CharField(max_length=255)
     state = USStateField()
