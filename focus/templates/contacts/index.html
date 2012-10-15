@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load url from future %}
+{% load contacts_extras %}
 
 {% block title %} / Contacts{% endblock %}
 
@@ -35,4 +36,20 @@
             </a>
         {% endfor %}
     </table>
+
+    <div class="pagination">
+        <ul>
+            {% if people.has_previous %}
+                <li><a href="?page={{ people.previous_page_number }}">Prev</a></li>
+            {% endif %}
+
+            {% for i in people.paginator.num_pages|get_range %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+
+            {% if people.has_next %}
+                <li><a href="?page={{ people.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
 {% endblock %}
