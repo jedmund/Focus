@@ -37,3 +37,7 @@
 .table select {
     margin-bottom: 0;
 }
+
+.table textarea {
+    height: 100px;
+}
