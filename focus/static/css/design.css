@@ -18,6 +18,10 @@
     width: 140px;
 }
 
+.table.table-edit > tbody tr td:first-child {
+    line-height: 30px;
+}
+
 .table tr td a {
     display: block;
     color: black;
@@ -40,4 +44,11 @@
 
 .table textarea {
     height: 100px;
+}
+
+.table tr td span.label {
+    font-variant: small-caps;
+    padding-bottom: 3px;
+    font-size: 12.844px;
+    margin-left: 10px;
 }
