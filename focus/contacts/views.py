@@ -47,13 +47,10 @@ def edit(request, person_id):
 def create(request):
     if request.method == 'POST':
         form = PersonForm(request.POST)
-        print form.is_valid()
         if form.is_valid():
             p = form.save()
-            print p.id
             return HttpResponseRedirect(reverse('contacts.views.person', kwargs={'person_id': p.id}))
         else:
-            print form
             return render_to_response('contacts/edit.html', {
                 'form': form,
                 'view': 'contacts'

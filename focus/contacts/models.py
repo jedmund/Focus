@@ -106,6 +106,9 @@ class Person(models.Model):
     add_date   = models.DateTimeField('Date added', auto_now_add=True)
     add_method = models.IntegerField('Method', max_length=2, choices=METHOD_CHOICES, default=INTERNAL)
 
+    def __unicode__(self):
+        return self.first_name + " " + self.last_name
+
 class PersonForm(ModelForm):
     class Meta:
         model = Person
