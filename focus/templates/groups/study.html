@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load url from future %}
+
+{% block title %}/ {{ g.study }}{% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+        <h1 class="span8">{{ g.topic }}</h1>
+        <a class="btn span2 offset2 h1-btn edit-study-btn" href="{% url 'groups.views.edit_study' g.id %}">Edit</a>
+    </div>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <td colspan="2"><strong>Study Information</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>Topic</td>
+            <td>{{ g.topic }}</td>
+        <tr>
+            <td>Venue</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Compensation</td>
+            <td>${{ g.compensation }}</td>
+        </tr>
+    </table>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <td colspan="2"><strong>Work Information</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>Co-Op Price</td>
+            <td>${{ g.coop_price }} per spot</td>
+        <tr>
+            <td>Spots</td>
+            <td>{{ g.spots }}</td>
+        </tr>
+    </table>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <td><strong>Other Information</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>Notes</td>
+            <td>{{ g.notes }}</td>
+        </tr>
+    </table>
+{% endblock %}
