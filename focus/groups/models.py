@@ -9,6 +9,7 @@ class Venue(models.Model):
     city     = models.CharField(max_length=255)
     state    = USStateField()
     zip_code = USPostalCodeField()
+    phone    = PhoneNumberField()
 
 class VenueForm(ModelForm):
     class Meta:
@@ -17,12 +18,15 @@ class VenueForm(ModelForm):
 class Study(models.Model):
     topic = models.CharField(max_length=255)
     spots = models.IntegerField(max_length=3)
-    venue = models.ForeignKey(Venue)
+    # venue = models.ForeignKey(Venue)
 
-    respondent_price = models.IntegerField('Price per Respondent', max_length=4)
-    compensation     = models.IntegerField('Participation Compensation', max_length=4)
+    coop_price   = models.IntegerField('Co-op price', max_length=4)
+    compensation = models.IntegerField('Participation Compensation', max_length=4)
 
     notes = models.TextField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.topic
 
 class StudyForm(ModelForm):
     class Meta:
