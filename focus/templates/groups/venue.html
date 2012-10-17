@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
 {% load url from future %}
 
 {% block title %}/ {{ v.study }}{% endblock %}
@@ -36,7 +37,7 @@
             </tr>
         </thead>
         <tr>
-            <td class="row-fluid" colspan="2"><iframe class="span12"height='300' frameBorder='0' src='http://a.tiles.mapbox.com/v3/jedmund.map-h3sojoku.html#13/40.758973066293485/-73.97727147899819'></iframe></td>
+            <td class="row-fluid" colspan="2"><div id="map"><div id="mapbox"></div></div></td>
         </tr>
         <tr>
             <td>Address</td>
@@ -50,4 +51,29 @@
             <td>{{ v.cross_st }}</td>
         </tr>
     </table>
+{% endblock %}
+
+{% block styles %}
+    <link href="{% static "css/leaflet.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCn9yxcHjsxDYWq3dTH5UZ7MyfleaKY5vA&sensor=false"></script>
+    <script src="{% static "js/leaflet.js" %}"></script>
+    <script src="{% static "js/wax.leaf.min.js" %}"></script>
+    <script src="{% static "js/geo.js" %}"></script>
+
+    <script type="text/javascript">
+        var venue = {
+            address : '{{ v.address }}',
+            city    : '{{ v.city }}',
+            state   : '{{ v.state }}',
+            zip     : {{ v.zip_code }},
+            compile : function() {
+                return this.address + ' ' + this.city + ', ' + this.state + ' ' + this.zip;
+            }
+        }
+
+        var geocode = codeAddress(venue.compile());
+    </script>
 {% endblock %}

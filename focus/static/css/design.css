@@ -56,3 +56,20 @@
     font-size: 12.844px;
     margin-left: 10px;
 }
+
+#mapbox {
+    height: 300px;
+}
+
+#mapbox img {
+    max-width: none;
+}
+
+#mapbox label {
+    width: auto;
+    display: inline;
+}
+
+#mapbox .leaflet-control-attribution {
+    display: none;
+}
