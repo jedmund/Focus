@@ -50,11 +50,26 @@ def venues(request):
     return HttpResponse(t.render(c))
 
 
-def venue(request):
-    return HttpResposne("This is a venue.")
+def venue(request, venue_id):
+    return HttpResponse("This is a venue.")
 
-def edit_venue(request):
+def edit_venue(request, venue_id):
     return HttpResponse("Edit this venue.")
 
 def create_venue(request):
-    return HttpResponse("Create a venue.")
+    if request.method == 'POST':
+        form = VenueForm(request.POST)
+        if form.is_valid():
+            v = form.save()
+            return HttpResponseRedirect(reverse('groups.views.venue', kwargs={'venue_id': v.id}))
+        else:
+            return render_to_response('groups/edit_venue.html', {
+                'form': form,
+                'view': 'groups'
+            }, context_instance=RequestContext(request))
+    else:
+        form = VenueForm()
+        return render_to_response('groups/edit_venue.html', {
+            'form': form,
+            'view': 'groups'
+        }, context_instance=RequestContext(request))

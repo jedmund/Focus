@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.localflavor.us.models import USStateField, USPostalCodeField, PhoneNumberField
+from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 from django.forms import ModelForm
 from contacts.models import Person
 
@@ -8,7 +8,8 @@ class Venue(models.Model):
     address  = models.CharField(max_length=400)
     city     = models.CharField(max_length=255)
     state    = USStateField()
-    zip_code = USPostalCodeField()
+    zip_code = models.CharField(max_length=5)
+    cross_st = models.CharField(max_length=255, blank=True, null=True)
     phone    = PhoneNumberField()
 
 class VenueForm(ModelForm):
