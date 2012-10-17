@@ -65,11 +65,11 @@ def create_venue(request):
         else:
             return render_to_response('groups/edit_venue.html', {
                 'form': form,
-                'view': 'groups'
+                'view': 'venues'
             }, context_instance=RequestContext(request))
     else:
         form = VenueForm()
         return render_to_response('groups/edit_venue.html', {
             'form': form,
-            'view': 'groups'
+            'view': 'venues'
         }, context_instance=RequestContext(request))

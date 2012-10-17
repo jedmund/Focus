@@ -59,6 +59,9 @@
                             <li{% if view == 'groups' %} class="active"{% endif %}>
                                 <a href="{% url 'groups.views.index' %}">Studies</a>
                             </li>
+                            <li{% if view == 'venues' %} class="active"{% endif %}>
+                                <a href="{% url 'groups.views.venues' %}">Venues</a>
+                            </li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
