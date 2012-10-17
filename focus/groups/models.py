@@ -12,6 +12,9 @@ class Venue(models.Model):
     cross_st = models.CharField(max_length=255, blank=True, null=True)
     phone    = PhoneNumberField()
 
+    def __unicode__(self):
+        return self.name
+
 class VenueForm(ModelForm):
     class Meta:
         model = Venue
@@ -19,7 +22,7 @@ class VenueForm(ModelForm):
 class Study(models.Model):
     topic = models.CharField(max_length=255)
     spots = models.IntegerField(max_length=3)
-    # venue = models.ForeignKey(Venue)
+    venue = models.ForeignKey(Venue)
 
     coop_price   = models.IntegerField('Co-op price', max_length=4)
     compensation = models.IntegerField('Participation Compensation', max_length=4)
