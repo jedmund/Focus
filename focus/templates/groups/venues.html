@@ -20,7 +20,7 @@
                 <td class="date span2"><strong>Phone Number</strong></td>
             </tr>
         </thead>
-        {% for study in studies %}
+        {% for venue in venues %}
                 <tr>
                     <td>
                         <a href="{% url 'groups.views.venue' venue.id %}">{{ venue.name }}</a>
