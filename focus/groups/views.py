@@ -53,10 +53,17 @@ def venues(request):
 
 
 def venue(request, venue_id):
-    return HttpResponse("This is a venue.")
+    v = get_object_or_404(Venue, pk=venue_id)
+    return render_to_response('groups/venue.html', {
+        'v': v,
+        'view': 'venues'
+    }, context_instance=RequestContext(request))
+
 
 def edit_venue(request, venue_id):
-    return HttpResponse("Edit this venue.")
+    v = get_object_or_404(Venue, pk=venue_id)
+    form = VenueForm(instance=v)
+    return render_to_response('groups/edit_venue.html', {'v': v, 'form': form, 'view': 'v'})
 
 def create_venue(request):
     if request.method == 'POST':
