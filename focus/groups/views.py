@@ -10,6 +10,7 @@ def index(request):
     t = loader.get_template('groups/index.html')
     c = Context({
         'studies': studies,
+        'view': 'groups'
     })
     return HttpResponse(t.render(c))
 
@@ -46,6 +47,7 @@ def venues(request):
     t = loader.get_template('groups/venues.html')
     c = Context({
         'venues': venues,
+        'view': 'venues',
     })
     return HttpResponse(t.render(c))
 
