@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load url from future %}
+
+{% block title %}/ {{ v.study }}{% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+        <h1 class="span8">{{ v.name }}</h1>
+        <a class="btn span2 offset2 h1-btn edit-venue-btn" href="{% url 'groups.views.edit_venue' v.id %}">Edit</a>
+    </div>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <td colspan="2"><strong>Venue Information</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>Name</td>
+            <td>{{ v.name }}</td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td>
+                <a class="visible-desktop" href="callto:{{ v.phone }}">{{ v.phone }}</a>
+                <a class="visible-phone visible-tablet" href="tel:{{ v.phone }}">{{ v.phone }}</a>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <td colspan="2"><strong>Location</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td class="row-fluid" colspan="2"><iframe class="span12"height='300' frameBorder='0' src='http://a.tiles.mapbox.com/v3/jedmund.map-h3sojoku.html#13/40.758973066293485/-73.97727147899819'></iframe></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>
+                {{ v.address }}<br />
+                {{ v.city }}, {{ v.state }} {{ v.zip_code }}
+            </td>
+        </tr>
+        <tr>
+            <td>Cross Streets</td>
+            <td>{{ v.cross_st }}</td>
+        </tr>
+    </table>
+{% endblock %}
