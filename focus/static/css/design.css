@@ -37,6 +37,10 @@
     min-width: 160px;
 }
 
+.table tr td.venue_name {
+    min-width: 220px;
+}
+
 .table input,
 .table select {
     margin-bottom: 0;
