@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django.db import models
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
+from groups.models import Venue, Study, Timeslot
 
 class Person(models.Model):
     ETHNICITY_CHOICES = (
@@ -77,6 +78,8 @@ class Person(models.Model):
     first_name = models.CharField(max_length=200)
     last_name  = models.CharField(max_length=200)
     gender     = models.IntegerField(max_length=2, choices=GENDER_CHOICES, default=MALE)
+
+    studies    = models.ManyToManyField(Study)
 
     birthdate  = models.DateField('birthdate')
     occupation = models.CharField(max_length=400, default='', blank=True, null=True)
