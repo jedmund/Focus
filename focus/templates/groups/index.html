@@ -7,7 +7,7 @@
 {% block content %}
     <div class="row-fluid">
         <h1 class="span8">All Groups</h1>
-        <a class="btn btn-primary span3 offset1 h1-btn add-study-btn" href="{% url 'groups.views.create_study' %}">
+        <a class="btn btn-primary span3 offset1 h1-btn add-study-btn" href="{% url 'create_study' %}">
             <i class="icon-plus-sign icon-white"></i>&nbsp;Add a group
         </a>
     </div>
@@ -23,13 +23,13 @@
         {% for study in studies %}
                 <tr>
                     <td>
-                        <a href="{% url 'groups.views.study' study.id %}">{{ study.topic }}</a>
+                        <a href="{% url 'view_study' study.id %}">{{ study.topic }}</a>
                     </td>
                     <td>
-                        <a href="{% url 'groups.views.study' study.id %}"></a>
+                        <a href="{% url 'view_study' study.id %}"></a>
                     </td>
                     <td>
-                        <a href="{% url 'groups.views.study' study.id %}"></a>
+                        <a href="{% url 'view_study' study.id %}"></a>
                     </td>
                 </tr>
             </a>
