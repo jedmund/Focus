@@ -22,6 +22,10 @@
     line-height: 30px;
 }
 
+.table tr td {
+    vertical-align: middle;
+}
+
 .table tr td a {
     display: block;
     color: black;
@@ -72,4 +76,12 @@
 
 #mapbox .leaflet-control-attribution {
     display: none;
+}
+
+.table td .input-prepend {
+    margin-bottom: 0;
+}
+
+.input-prepend input {
+    width: 180px;
 }

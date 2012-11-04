@@ -7,7 +7,7 @@
 {% block content %}
     <div class="row-fluid">
         {% if g %}
-            <h1 class="span8">Editing {{ g.topic }}</h1>
+            <h1 class="span8">Editing "{{ g.topic }}"</h1>
         {% else %}
             <h1 class="span8">Add new study</h1>
         {% endif %}
@@ -31,10 +31,12 @@
                 <td>{{ form.venue }}</td>
             </tr>
         </table>
+
+        {% for slot in slots %}
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <td colspan="2"><strong>Timeslots</strong></td>
+                    <td colspan="2"><strong>Timeslot</strong></td>
                 </tr>
             </thead>
             <tr>
@@ -42,18 +44,30 @@
                 <td>{{ slot.datetime }}</td>
             </tr>
             <tr>
+                <td>Participant Compensation</td>
+                <td>
+                    <div class="input-prepend">
+                        <span class="add-on">$</span>
+                        {{ slot.compensation }}
+                    </div>
+                </td>
+            </tr>
+            <tr>
                 <td>Co-op Price</td>
-                <td>{{ slot.coop_price }}</td>
+                <td>
+                    <div class="input-prepend">
+                        <span class="add-on">$</span>
+                        {{ slot.coop_price }}
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>Spots</td>
                 <td>{{ slot.spots }}</td>
             </tr>
-            <tr>
-                <td>Compensation</td>
-                <td>{{ slot.compensation }}</td>
-            </tr>
         </table>
+        {% endfor %}
+
         <table class="table table-striped table-hover table-bordered">
             <tr>
                 <td>Notes</td>
