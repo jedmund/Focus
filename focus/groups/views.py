@@ -2,7 +2,7 @@ from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from groups.models import Study, StudyForm, Venue, VenueForm
+from groups.models import Study, StudyForm, Venue, VenueForm, Timeslot, TimeslotForm
 from datetime import date
 
 def index(request):
@@ -21,24 +21,45 @@ def study(request, study_id):
         'view': 'groups'
     }, context_instance=RequestContext(request))
 
-def edit_study(request, study_id):
-    return HttpResponse("Edit this study.")
+def edit_study(request, study_id=None, template_name='groups/edit_study.html'):
+    if study_id:
+        study = get_object_or_404(Study, pk=study_id)
+    else:
+        study = Study()
+
+    if request.POST:
+        form = StudyForm(request.POST, instance=study)
+        if form.is_valid():
+            form.save()
+
+            # If the save was successful, redirect to another page
+            return HttpResponseRedirect(reverse('groups.views.study', kwargs={'study_id': g.id}))
+    else:
+        form = StudyForm(instance=study)
+
+    return render_to_response(template_name, {
+        'form': form,
+        'view': 'groups'
+    }, context_instance=RequestContext(request))
 
 def create_study(request):
+    group_form = StudyForm(request.POST)
+    slot_form = TimeslotForm(request.POST)
+
     if request.method == 'POST':
-        form = StudyForm(request.POST)
         if form.is_valid():
             g = form.save()
             return HttpResponseRedirect(reverse('groups.views.study', kwargs={'study_id': g.id}))
         else:
             return render_to_response('groups/edit_study.html', {
-                'form': form,
+                'form': group_form,
+                'slot': slot_form,
                 'view': 'groups'
             }, context_instance=RequestContext(request))
     else:
-        form = StudyForm()
         return render_to_response('groups/edit_study.html', {
-            'form': form,
+            'form': group_form,
+            'slot': slot_form,
             'view': 'groups'
         }, context_instance=RequestContext(request))
 

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 from django.forms import ModelForm
-from contacts.models import Person
 
 class Venue(models.Model):
     name     = models.CharField(max_length=400)
@@ -21,12 +20,7 @@ class VenueForm(ModelForm):
 
 class Study(models.Model):
     topic = models.CharField(max_length=255)
-    spots = models.IntegerField(max_length=3)
     venue = models.ForeignKey(Venue)
-
-    coop_price   = models.IntegerField('Co-op price', max_length=4)
-    compensation = models.IntegerField('Participation Compensation', max_length=4)
-
     notes = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
@@ -37,8 +31,14 @@ class StudyForm(ModelForm):
         model = Study
 
 class Timeslot(models.Model):
-    study = models.ForeignKey(Study)
-    datetime = models.DateTimeField()
+    study        = models.ForeignKey(Study)
+    datetime     = models.DateTimeField()
+    coop_price   = models.IntegerField('Co-op price', max_length=4)
+    compensation = models.IntegerField('Participation Compensation', max_length=4)
+    spots = models.IntegerField(max_length=3)
+
+    def __unicode__(self):
+        return self.datetime
 
 class TimeslotForm(ModelForm):
     class Meta:
