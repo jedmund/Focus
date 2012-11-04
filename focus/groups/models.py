@@ -1,3 +1,4 @@
+import datetime, pytz
 from django.db import models
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 from django.forms import ModelForm
@@ -33,12 +34,13 @@ class StudyForm(ModelForm):
 class Timeslot(models.Model):
     study        = models.ForeignKey(Study)
     datetime     = models.DateTimeField()
+    duration     = models.IntegerField('Duration (minutes)', max_length=4) # Duration in minutes
     coop_price   = models.IntegerField('Co-op price', max_length=4)
     compensation = models.IntegerField('Participation Compensation', max_length=4)
     spots = models.IntegerField(max_length=3)
 
     def __unicode__(self):
-        return self.datetime
+        return self.study.topic + ' on ' + self.datetime.strftime('%m/%d/%Y') + ' at ' + self.datetime.strftime('%I:%M %p')
 
 class TimeslotForm(ModelForm):
     class Meta:
