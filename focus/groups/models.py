@@ -46,6 +46,7 @@ class TimeslotForm(ModelForm):
     class Meta:
         model = Timeslot
         widgets = {
+            'duration'     : NumberInput(attrs={'min':'0', 'step':'5'}),
             'coop_price'   : NumberInput(attrs={'min':'0', 'step':'5'}),
             'compensation' : NumberInput(attrs={'min':'0', 'step':'5'}),
             'spots'        : NumberInput(attrs={'min':'1', 'step':'1'}),

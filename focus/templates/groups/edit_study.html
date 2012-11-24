@@ -170,7 +170,7 @@
                 return false;
             });
 
-            $('#id_duration').on('focus', function() {
+            $('#id_duration, .datepicker-default').on('focus', function() {
                $('.bootstrap-timepicker').removeClass('open');
                $('.timepicker-default').data("timepicker").open = false;
             });
