@@ -16,19 +16,23 @@ def index(request):
 
 def study(request, study_id):
     g = get_object_or_404(Study, pk=study_id)
-    # t = Timeslot.objects.select_related().get(id=study_id)
+    t = Timeslot.objects.select_related().get(id=study_id)
     return render_to_response('groups/study.html', {
         'g': g,
         'view': 'groups'
     }, context_instance=RequestContext(request))
 
 def edit_study(request, study_id=None, template_name='groups/edit_study.html'):
+    # If there is a Study ID, we are editing an existing study and should fetch from DB.
+    # Otherwise, make new objects.
     if study_id:
         study = get_object_or_404(Study, pk=study_id)
         timeslots = Timeslot.objects.select_related().filter(study_id=study_id)
     else:
         study = Study()
 
+    # If the data is POSTed, validate and save.
+    # Otherwise, we need to prepare the forms to output to the browser.
     if request.POST:
         form = StudyForm(request.POST, instance=study)
         if form.is_valid():
@@ -38,21 +42,29 @@ def edit_study(request, study_id=None, template_name='groups/edit_study.html'):
             return HttpResponseRedirect(reverse('groups.views.study', kwargs={'study_id': g.id}))
     else:
         form  = StudyForm(instance=study)
-        slots = []
-        for i in range(len(timeslots)):
-            slot_form = TimeslotForm(instance=timeslots[i])
-            slots.append(slot_form)
+        empty_timeslot_form = TimeslotForm(request.POST)
+
+
+        # If editing, set up the forms for the Study's n Timeslots
+        if study_id:
+            slots = []
+            for i in range(len(timeslots)):
+                slot_form = TimeslotForm(instance=timeslots[i])
+                slots.append(slot_form)
+        else:
+            slots = []
 
     return render_to_response(template_name, {
-        'g'    : study,
-        'form' : form,
-        'slots': slots,
-        'view' : 'groups'
+        'g'          : study,
+        'form'       : form,
+        'empty_slot' : empty_timeslot_form,
+        'slots'      : slots,
+        'view'       : 'groups'
     }, context_instance=RequestContext(request))
 
 def create_study(request):
     group_form = StudyForm(request.POST)
-    slot_form = TimeslotForm(request.POST)
+    empty_timeslot_form = TimeslotForm(request.POST)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -67,7 +79,7 @@ def create_study(request):
     else:
         return render_to_response('groups/edit_study.html', {
             'form': group_form,
-            'slot': slot_form,
+            'empty_slot': empty_timeslot_form,
             'view': 'groups'
         }, context_instance=RequestContext(request))
 
