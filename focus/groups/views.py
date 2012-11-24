@@ -1,6 +1,6 @@
 from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from groups.models import Study, StudyForm, Venue, VenueForm, Timeslot, TimeslotForm
 from datetime import date
@@ -16,7 +16,7 @@ def index(request):
 
 def study(request, study_id):
     g = get_object_or_404(Study, pk=study_id)
-    t = Timeslot.objects.select_related().get(id=study_id)
+    #t = Timeslot.objects.select_related().get(id=study_id)
     return render_to_response('groups/study.html', {
         'g': g,
         'view': 'groups'
@@ -65,10 +65,10 @@ def edit_study(request, study_id=None, template_name='groups/edit_study.html'):
 def create_study(request):
     group_form = StudyForm(request.POST)
     empty_timeslot_form = TimeslotForm(request.POST)
-
     if request.method == 'POST':
-        if form.is_valid():
-            g = form.save()
+        if group_form.is_valid():
+            g = group_form.save()
+
             return HttpResponseRedirect(reverse('groups.views.study', kwargs={'study_id': g.id}))
         else:
             return render_to_response('groups/edit_study.html', {

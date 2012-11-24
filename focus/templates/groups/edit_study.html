@@ -19,12 +19,12 @@
                 <td colspan="3">
                     <div class="input-prepend datepicker">
                         <span class="add-on">Date</span>
-                        <input class="datepicker-default" id="datepicker" type="text" />
+                        <input class="datepicker-default" name="datepicker" id="id_datepicker" type="text" />
                     </div>
 
                     <div class="input-prepend timepicker">
                         <span class="add-on">Time</span>
-                        <input class="timepicker-default" id="timepicker" type="text" />
+                        <input class="timepicker-default" name="timepicker" id="id_timepicker" type="text" />
                     </div>
                 </td>
             </tr>
@@ -138,27 +138,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript">
-        function makeDateTimeSlot() {
-            $('.datepicker-default').datepicker({
-                autoclose:      true,
-                todayBtn:       true,
-                todayHighlight: true,
-            });
-            $('.timepicker-default').timepicker();
-        }
-
-        function addTimeslot() {
-            var source   = $('#add-timeslot-form').html();
-            var template = Handlebars.compile(source);
-
-            $('.timeslot-adder').before(template);
-            var timeslot = $('.timeslot').last();
-
-            numberTimeslotIds($(timeslot), $('.timeslot').size()-1);
-            makeDateTimeSlot();
-        }
-
+    <script type="text/javascript" defer="defer">
         function calculateTimeslotTotal(elem) {
             var spots = $('.spots', elem).val();
             var price = $('.coop_price', elem).val();
@@ -166,39 +146,6 @@
             if (spots > 0 && price > 0)
                 return price * spots;
             else return '';
-        }
-
-        function numberTimeslotIds(elem, i) {
-            if ($('thead tr td strong', elem).html() === 'Timeslot Information')
-                $('thead tr td strong', elem).append(" #" + parseInt(i+1));
-
-            // Datepicker
-            $('#datepicker', elem).parents('td').siblings('.label_cell').children('label')
-                .attr('for', $('#datepicker', elem).attr('id') + '_' + i);
-            $('#datepicker', elem).attr('id', $('#datepicker', elem).attr('id') + '_' + i);
-
-            // Timepicker
-            $('#timepicker', elem).attr('id', $('#timepicker', elem).attr('id') + '_' + i);
-
-            // Study Duration
-            $('#id_duration', elem).parents('td').siblings('.label_cell').children('label')
-                .attr('for', $('#id_duration', elem).attr('id') + '_' + i);
-            $('#id_duration', elem).attr('id', $('#id_duration', elem).attr('id') + '_' + i);
-
-            // Participant Compensation
-            $('#id_compensation', elem).parents('td').siblings('.label_cell').children('label')
-                .attr('for', $('#id_compensation', elem).attr('id') + '_' + i);
-            $('#id_compensation', elem).attr('id', $('#id_compensation', elem).attr('id') + '_' + i);
-
-            // Co-op Price
-            $('#id_coop_price', elem).parents('td').siblings('.label_cell').children('label')
-                .attr('for', $('#id_coop_price', elem).attr('id') + '_' + i);
-            $('#id_coop_price', elem).attr('id', $('#id_coop_price', elem).attr('id') + '_' + i);
-
-            // Spots
-            $('#id_spots', elem).parents('td').siblings('.label_cell').children('label')
-                .attr('for', $('#id_spots', elem).attr('id') + '_' + i);
-            $('#id_spots', elem).attr('id', $('#id_spots', elem).attr('id') + '_' + i);
         }
 
         function calculateCoopTotal() {
@@ -212,6 +159,65 @@
         }
 
         $(function() {
+            var makeDateTimeSlot = function() {
+                $('.datepicker-default').datepicker({
+                    autoclose:      true,
+                    todayBtn:       true,
+                    todayHighlight: true,
+                });
+                $('.timepicker-default').timepicker();
+            }
+
+            var addTimeslot = function() {
+                var source   = $('#add-timeslot-form').html();
+                var template = Handlebars.compile(source);
+
+                $('.timeslot-adder').before(template);
+                var timeslot = $('.timeslot').last();
+                makeDateTimeSlot();
+                numberTimeslotFields($(timeslot), $('.timeslot').size()-1);
+            }
+
+            var numberElemLabel = function(elem, i) {
+                $(elem).parents('td').siblings('.label_cell').children('label')
+                    .attr('for', $(elem).attr('id') + '_' + i);
+            }
+
+            var numberElemAttr = function(elem, attr, i) {
+                var val = $(elem).attr(attr);
+                $(elem).attr(attr, val + '_' + i);
+            }
+
+            var numberElemAttrsAndLabel = function(elem, attrs, i) {
+                numberElemLabel(elem, i);
+
+                for (x in attrs) {
+                    numberElemAttr(elem, attrs[x], i);
+                }
+            }
+
+            var numberTimeslotFields = function(parent, i) {
+                if ($('thead tr td strong', parent).html() === 'Timeslot Information')
+                    $('thead tr td strong', parent).append(" #" + parseInt(i+1));
+
+                var attrs = ['id', 'name'];
+
+                var strCount = $('.datepicker-default', parent).attr('id').match(/_/g);
+                if (strCount.length < 2)
+                    numberElemAttrsAndLabel($('.datepicker-default', parent), attrs, i);
+
+                var strCount = $('.timepicker-default', parent).attr('id').match(/_/g);
+                if (strCount.length < 2) {
+                    numberElemAttr($('.timepicker-default', parent), 'id', i);
+                    numberElemAttr($('.timepicker-default', parent), 'name', i);
+                }
+
+                numberElemAttrsAndLabel($('#id_duration', parent), attrs, i);
+                numberElemAttrsAndLabel($('#id_compensation', parent), attrs, i);
+                numberElemAttrsAndLabel($('#id_coop_price', parent), attrs, i);
+                numberElemAttrsAndLabel($('#id_spots', parent), attrs, i);
+            }
+
             {% if not g %}
                 addTimeslot();
             {% endif %}
@@ -222,7 +228,7 @@
             });
 
             $('.timeslot').each(function(i, v) {
-                numberTimeslotIds(this, i);
+                numberTimeslotFields(this, i);
             });
 
             $('.duration, .datepicker-default').live('focus', function() {
@@ -247,7 +253,6 @@
                     }
                 }
             });
-
         });
     </script>
 {% endblock %}
