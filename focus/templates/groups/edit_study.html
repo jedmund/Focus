@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tr>
-                <td>
+                <td class="label_cell">
                     <label for="datepicker">Date & Time</label>
                 </td>
                 <td colspan="3">
@@ -29,7 +29,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="label_cell">
                     <label for="id_{{ empty_slot.duration.html_name }}">Study Duration</label>
                 </td>
                 <td>
@@ -40,7 +40,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="label_cell">
                     <label for="id_{{ empty_slot.compensation.html_name }}">Participant Compensation</label>
                 </td>
                 <td>
@@ -51,7 +51,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="label_cell">
                     <label for="id_{{ empty_slot.coop_price.html_name }}">Co-op Price</label>
                 </td>
                 <td>
@@ -62,7 +62,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="label_cell">
                     <label for="id_{{ empty_slot.spots.html_name }}">Spots</label>
                 </td>
                 <td>
@@ -73,10 +73,9 @@
                 </td>
             </tr>
             <tr class="total hidden">
-                <td>Co-op Total</td>
+                <td>Timeslot Total</td>
                 <td class="value"></td>
             </tr>
-
         </table>
     </script>
 
@@ -112,13 +111,19 @@
         </table>
 
 
-        <table class="table table-striped table-hover table-bordered timeslot">
+        <table class="table table-striped table-hover table-bordered timeslot-adder">
             <thead>
                 <tr>
                     <td><strong>Timeslots</strong></td>
                     <td><button class="btn add-timeslot-btn">Add a Timeslot</button></td>
                 </tr>
             </thead>
+            <tbody>
+                <tr class="total hidden">
+                    <td>Co-op Total</td>
+                    <td class="value"></td>
+                </tr>
+            </tbody>
         </table>
 
         <table class="table table-striped table-hover table-bordered">
@@ -146,18 +151,64 @@
         function addTimeslot() {
             var source   = $('#add-timeslot-form').html();
             var template = Handlebars.compile(source);
-            $('.timeslot').last().before(template);
 
+            $('.timeslot-adder').before(template);
+            var timeslot = $('.timeslot').last();
+
+            numberTimeslotIds($(timeslot), $('.timeslot').size()-1);
             makeDateTimeSlot();
         }
 
-        function calculateCoopTotal(elem) {
-            var spots = $('#id_spots', elem).val();
-            var price = $('#id_coop_price', elem).val();
+        function calculateTimeslotTotal(elem) {
+            var spots = $('.spots', elem).val();
+            var price = $('.coop_price', elem).val();
 
             if (spots > 0 && price > 0)
                 return price * spots;
             else return '';
+        }
+
+        function numberTimeslotIds(elem, i) {
+            if ($('thead tr td strong', elem).html() === 'Timeslot Information')
+                $('thead tr td strong', elem).append(" #" + parseInt(i+1));
+
+            // Datepicker
+            $('#datepicker', elem).parents('td').siblings('.label_cell').children('label')
+                .attr('for', $('#datepicker', elem).attr('id') + '_' + i);
+            $('#datepicker', elem).attr('id', $('#datepicker', elem).attr('id') + '_' + i);
+
+            // Timepicker
+            $('#timepicker', elem).attr('id', $('#timepicker', elem).attr('id') + '_' + i);
+
+            // Study Duration
+            $('#id_duration', elem).parents('td').siblings('.label_cell').children('label')
+                .attr('for', $('#id_duration', elem).attr('id') + '_' + i);
+            $('#id_duration', elem).attr('id', $('#id_duration', elem).attr('id') + '_' + i);
+
+            // Participant Compensation
+            $('#id_compensation', elem).parents('td').siblings('.label_cell').children('label')
+                .attr('for', $('#id_compensation', elem).attr('id') + '_' + i);
+            $('#id_compensation', elem).attr('id', $('#id_compensation', elem).attr('id') + '_' + i);
+
+            // Co-op Price
+            $('#id_coop_price', elem).parents('td').siblings('.label_cell').children('label')
+                .attr('for', $('#id_coop_price', elem).attr('id') + '_' + i);
+            $('#id_coop_price', elem).attr('id', $('#id_coop_price', elem).attr('id') + '_' + i);
+
+            // Spots
+            $('#id_spots', elem).parents('td').siblings('.label_cell').children('label')
+                .attr('for', $('#id_spots', elem).attr('id') + '_' + i);
+            $('#id_spots', elem).attr('id', $('#id_spots', elem).attr('id') + '_' + i);
+        }
+
+        function calculateCoopTotal() {
+            var sum = 0;
+            if ($('.timeslot').size() > 1) {
+                $('.timeslot').each(function() {
+                    sum += parseInt($(this).find('.value strong').last().html());
+                });
+            }
+            return sum;
         }
 
         $(function() {
@@ -170,21 +221,33 @@
                 return false;
             });
 
-            $('#id_duration, .datepicker-default').on('focus', function() {
+            $('.timeslot').each(function(i, v) {
+                numberTimeslotIds(this, i);
+            });
+
+            $('.duration, .datepicker-default').live('focus', function() {
                $('.bootstrap-timepicker').removeClass('open');
                $('.timepicker-default').data("timepicker").open = false;
             });
 
-            $('#id_spots, #id_coop_price').on('change', function() {
+            $('.spots, .coop_price').live('change', function() {
                 var parent = $(this).parents('.timeslot')[0];
-                var total = calculateCoopTotal(parent);
+                var total = calculateTimeslotTotal(parent);
 
                 if (total !== '') {
                     $(parent).find('.total')
-                    .children('.value').html('<strong>$' + total + '</strong>')
+                    .children('.value').html('<strong>$</strong><strong>' + total + '</strong>')
                     .parent().removeClass('hidden');
+
+                    var absTotal = calculateCoopTotal();
+                    if (absTotal > 0) {
+                        $('.timeslot-adder').find('.total')
+                        .children('.value').html('<strong>$' + absTotal + '</strong>')
+                        .parent().removeClass('hidden');
+                    }
                 }
             });
+
         });
     </script>
 {% endblock %}
