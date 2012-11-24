@@ -13,21 +13,36 @@
                 </tr>
             </thead>
             <tr>
-                <td>Date & Time</td>
+                <td>
+                    <label for="datepicker">Date & Time</label>
+                </td>
                 <td colspan="3">
                     <div class="input-prepend datepicker">
                         <span class="add-on">Date</span>
-                        <input class="datepicker-default" type="text" />
+                        <input class="datepicker-default" id="datepicker" type="text" />
                     </div>
 
                     <div class="input-prepend timepicker">
                         <span class="add-on">Time</span>
-                        <input class="timepicker-default" type="text" />
+                        <input class="timepicker-default" id="timepicker" type="text" />
                     </div>
                 </td>
             </tr>
             <tr>
-                <td>Participant Compensation</td>
+                <td>
+                    <label for="id_{{ empty_slot.duration.html_name }}">Study Duration</label>
+                </td>
+                <td>
+                    <div class="input-append">
+                        {{ empty_slot.duration }}
+                        <span class="add-on">mins</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="id_{{ empty_slot.compensation.html_name }}">Participant Compensation</label>
+                </td>
                 <td>
                     <div class="input-prepend">
                         <span class="add-on">$</span>
@@ -36,7 +51,9 @@
                 </td>
             </tr>
             <tr>
-                <td>Co-op Price</td>
+                <td>
+                    <label for="id_{{ empty_slot.coop_price.html_name }}">Co-op Price</label>
+                </td>
                 <td>
                     <div class="input-prepend">
                         <span class="add-on">$</span>
@@ -45,8 +62,15 @@
                 </td>
             </tr>
             <tr>
-                <td>Spots</td>
-                <td>{{ empty_slot.spots }}</td>
+                <td>
+                    <label for="id_{{ empty_slot.spots.html_name }}">Spots</label>
+                </td>
+                <td>
+                    <div class="input-prepend">
+                        <span class="add-on">#</span>
+                        {{ empty_slot.spots }}
+                    </div>
+                </td>
             </tr>
         </table>
     </script>
@@ -69,11 +93,15 @@
                 </tr>
             </thead>
             <tr>
-                <td>Topic</td>
+                <td>
+                    <label for="id_{{ form.topic.html_name }}">Topic</label>
+                </td>
                 <td>{{ form.topic }}</td>
             </tr>
             <tr>
-                <td>Venue</td>
+                <td>
+                    <label for="id_{{ form.venue.html_name }}">Venue</label>
+                </td>
                 <td>{{ form.venue }}</td>
             </tr>
         </table>
@@ -90,7 +118,9 @@
 
         <table class="table table-striped table-hover table-bordered">
             <tr>
-                <td>Notes</td>
+                <td>
+                    <label for="id_{{ form.notes.html_name }}">Notes</label>
+                </td>
                 <td>{{ form.notes }}</td>
             </tr>
         </table>
@@ -111,7 +141,7 @@
         function addTimeslot() {
             var source   = $('#add-timeslot-form').html();
             var template = Handlebars.compile(source);
-            $('.timeslot').last().after(template);
+            $('.timeslot').last().before(template);
 
             makeDateTimeSlot();
         }
@@ -124,6 +154,11 @@
             $('.add-timeslot-btn').click(function() {
                 addTimeslot();
                 return false;
+            });
+
+            $('#id_duration').on('focus', function() {
+               $('.bootstrap-timepicker').removeClass('open');
+               $('.timepicker-default').data("timepicker").open = false;
             });
         });
     </script>

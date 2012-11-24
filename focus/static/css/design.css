@@ -26,6 +26,10 @@
     vertical-align: middle;
 }
 
+.table tr td label {
+    margin-bottom: 0;
+}
+
 .table tr td a {
     display: block;
     color: black;
@@ -96,6 +100,17 @@
     width: 155px;
 }
 
+.table td .input-append {
+    margin-bottom: 0;
+}
+
+.table td .input-append .add-on {
+    min-width: 40px;
+}
+
+.table td .input-append input {
+    width: 155px;
+}
 
 .table td .input-prepend.datepicker {
     margin-bottom: 10px;

@@ -1,7 +1,7 @@
 import datetime, pytz
 from django.db import models
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
-from django.forms import ModelForm
+from django.forms import ModelForm, NumberInput
 
 class Venue(models.Model):
     name     = models.CharField(max_length=400)
@@ -45,3 +45,8 @@ class Timeslot(models.Model):
 class TimeslotForm(ModelForm):
     class Meta:
         model = Timeslot
+        widgets = {
+            'coop_price'   : NumberInput(attrs={'min':'0', 'step':'5'}),
+            'compensation' : NumberInput(attrs={'min':'0', 'step':'5'}),
+            'spots'        : NumberInput(attrs={'min':'1', 'step':'1'}),
+        }

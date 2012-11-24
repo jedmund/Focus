@@ -40,6 +40,7 @@
         this.secondStep = this.options.secondStep || this.secondStep;
         this.showMeridian = this.options.showMeridian || this.showMeridian;
         this.showSeconds = this.options.showSeconds || this.showSeconds;
+        this.showConfirm = this.options.showConfirm || this.showConfirm;
         this.showInputs = this.options.showInputs || this.showInputs;
         this.disableFocus = this.options.disableFocus || this.disableFocus;
         this.template = this.options.template || this.template;
@@ -116,9 +117,11 @@
 
             this.updateFromElementVal();
 
-            $('html')
+            $('html, .dismiss-dropdown')
                 .trigger('click.timepicker.data-api')
-                .one('click.timepicker.data-api', $.proxy(this.hideWidget, this));
+                .one('click.timepicker.data-api', $.proxy(this.hideWidget, this))
+                .one('click.timepicker.data-api', $.proxy(this.updateElement, this));
+
 
             if (this.template === 'modal') {
                 this.$widget.modal('show').on('hidden', $.proxy(this.hideWidget, this));
@@ -692,6 +695,8 @@
                 var minuteTemplate = '<input type="text" name="minute" class="bootstrap-timepicker-minute" maxlength="2"/>';
                 var secondTemplate = '<input type="text" name="second" class="bootstrap-timepicker-second" maxlength="2"/>';
                 var meridianTemplate = '<input type="text" name="meridian" class="bootstrap-timepicker-meridian" maxlength="2"/>';
+                var buttonTemplate = '<button class="btn btn-primary dismiss-dropdown">Add Time</button>';
+
             } else {
                 var hourTemplate = '<span class="bootstrap-timepicker-hour"></span>';
                 var minuteTemplate = '<span class="bootstrap-timepicker-minute"></span>';
@@ -738,6 +743,13 @@
                                                 '<td><a href="#" data-action="toggleMeridian"><i class="icon-chevron-down"></i></a></td>'
                                            : '') +
                                        '</tr>'+
+                                       (this.showConfirm ?
+                                           '<tr>'+
+                                               '<td colspan="5">'+
+                                                   '<div class="bottom">'+buttonTemplate+'</div>'+
+                                               '</td>'+
+                                            '</tr>'
+                                        : '') +
                                    '</table>';
 
             var template;
@@ -794,6 +806,7 @@
     , showSeconds: false
     , showInputs: true
     , showMeridian: true
+    , showConfirm: true
     , template: 'dropdown'
     , modalBackdrop: false
     , templates: {} // set custom templates
