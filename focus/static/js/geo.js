@@ -43,8 +43,8 @@ function codeAddress(address) {
 
 function addToMapBox(map, result) {
     var g = {
-        lat: result.Xa,
-        lng: result.Ya
+        lat: result.$a,
+        lng: result.ab
     }
 
     var marker = new L.Marker(new L.LatLng(g.lat, g.lng), {icon: new MarkerIcon()});
