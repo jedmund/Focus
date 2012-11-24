@@ -72,6 +72,11 @@
                     </div>
                 </td>
             </tr>
+            <tr class="total hidden">
+                <td>Co-op Total</td>
+                <td class="value"></td>
+            </tr>
+
         </table>
     </script>
 
@@ -146,6 +151,15 @@
             makeDateTimeSlot();
         }
 
+        function calculateCoopTotal(elem) {
+            var spots = $('#id_spots', elem).val();
+            var price = $('#id_coop_price', elem).val();
+
+            if (spots > 0 && price > 0)
+                return price * spots;
+            else return '';
+        }
+
         $(function() {
             {% if not g %}
                 addTimeslot();
@@ -159,6 +173,17 @@
             $('#id_duration').on('focus', function() {
                $('.bootstrap-timepicker').removeClass('open');
                $('.timepicker-default').data("timepicker").open = false;
+            });
+
+            $('#id_spots, #id_coop_price').on('change', function() {
+                var parent = $(this).parents('.timeslot')[0];
+                var total = calculateCoopTotal(parent);
+
+                if (total !== '') {
+                    $(parent).find('.total')
+                    .children('.value').html('<strong>$' + total + '</strong>')
+                    .parent().removeClass('hidden');
+                }
             });
         });
     </script>
