@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from groups.models import Study, StudyForm, Venue, VenueForm, Timeslot, TimeslotForm
-from datetime import date
+from datetime import date, datetime
 
 def index(request):
     studies = Study.objects.all().order_by('topic')[:5]
@@ -64,11 +64,27 @@ def edit_study(request, study_id=None, template_name='groups/edit_study.html'):
 
 def create_study(request):
     group_form = StudyForm(request.POST)
-    empty_timeslot_form = TimeslotForm(request.POST)
+    timeslot_form = TimeslotForm(request.POST)
     if request.method == 'POST':
         if group_form.is_valid():
             g = group_form.save()
 
+            for x in range(int(request.POST['timeslot_count'])):
+                index = str(x)
+
+                datetime_str = (request.POST['datepicker_'+index]) + " " + (request.POST['timepicker_'+index])
+                datetime_obj = datetime.strptime(datetime_str, '%m/%d/%Y %I:%M %p')
+
+                timeslot = Timeslot.objects.create_timeslot(
+                    study=g,
+                    datetime=datetime_obj,
+                    duration=request.POST['duration_'+index],
+                    coop_price=request.POST['coop_price_'+index],
+                    compensation=request.POST['compensation_'+index],
+                    spots=request.POST['spots_'+index]
+                )
+
+            print request.POST['timeslot_count']
             return HttpResponseRedirect(reverse('groups.views.study', kwargs={'study_id': g.id}))
         else:
             return render_to_response('groups/edit_study.html', {
@@ -79,7 +95,7 @@ def create_study(request):
     else:
         return render_to_response('groups/edit_study.html', {
             'form': group_form,
-            'empty_slot': empty_timeslot_form,
+            'empty_slot': timeslot_form,
             'view': 'groups'
         }, context_instance=RequestContext(request))
 

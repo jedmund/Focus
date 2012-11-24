@@ -31,6 +31,18 @@ class StudyForm(ModelForm):
     class Meta:
         model = Study
 
+class TimeslotManager(models.Manager):
+    def create_timeslot(self, study, datetime, duration, coop_price, compensation, spots):
+        timeslot = self.create(
+            study=study,
+            datetime=datetime,
+            duration=duration,
+            coop_price=coop_price,
+            compensation=compensation,
+            spots=spots
+        )
+        return timeslot
+
 class Timeslot(models.Model):
     study        = models.ForeignKey(Study)
     datetime     = models.DateTimeField()
@@ -39,8 +51,11 @@ class Timeslot(models.Model):
     compensation = models.IntegerField('Participation Compensation', max_length=4)
     spots = models.IntegerField(max_length=3)
 
+    objects = TimeslotManager()
+
     def __unicode__(self):
         return self.study.topic + ' on ' + self.datetime.strftime('%m/%d/%Y') + ' at ' + self.datetime.strftime('%I:%M %p')
+
 
 class TimeslotForm(ModelForm):
     class Meta:
