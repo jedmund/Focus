@@ -88,6 +88,16 @@
     margin-bottom: 0;
 }
 
-.input-prepend input {
-    width: 180px;
+.table td .input-prepend .add-on {
+    min-width: 40px;
+}
+
+.table td .input-prepend input {
+    width: 155px;
+}
+
+
+.table td .input-prepend.datepicker {
+    margin-bottom: 10px;
+    padding: 0;
 }

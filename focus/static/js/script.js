@@ -1,4 +1,4 @@
-$('document').ready(function() {
+$(function() {
     $('.save-btn').click(function() {
         $('form').submit();
     });
