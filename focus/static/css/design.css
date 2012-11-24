@@ -33,6 +33,12 @@
     width: 100%;
 }
 
+#mapbox .leaflet-control-zoom a {
+    display: inherit;
+    height: 19px;
+    width: 19px;
+}
+
 .table tr td a:hover {
     text-decoration: none;
 }
