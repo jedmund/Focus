@@ -3,3 +3,5 @@ MySQL-python
 South
 pytz
 django-shortcuts
+django-tastypie
+https://github.com/PaulUithol/backbone-tastypie/archive/master.zip
