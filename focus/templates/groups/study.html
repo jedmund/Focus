@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
 {% load url from future %}
 
 {% block title %}/ {{ g.study }}{% endblock %}
@@ -10,50 +11,84 @@
         <a class="btn span2 offset2 h1-btn edit-study-btn" href="{% url 'groups.views.edit_study' g.id %}">Edit</a>
     </div>
 
-    <table class="table table-striped table-hover table-bordered">
-        <thead>
-            <tr>
-                <td colspan="2"><strong>Study Information</strong></td>
-            </tr>
-        </thead>
-        <tr>
-            <td>Topic</td>
-            <td>{{ g.topic }}</td>
-        <tr>
-            <td>Venue</td>
-            <td><a href="{# url 'groups.views.venue' g.venue.id #}">{{ g.venue }}</a></td>
-        </tr>
+    <div class="row-fluid">
+        <div class="span3 focus-sidebar">
+            <ul class="nav nav-list focus-sidenav affix-top">
+                <li class="active">
+                    <a href="#info">
+                        <i class="icon-chevron-right"></i>
+                        Group Information
+                    </a>
+                </li>
+                {% for t in ts %}
+                    <li>
+                        <a href="#{{ t.id }}">
+                            <i class="icon-chevron-right"></i>
+                            {{ t.datetime|date:'F j, Y h:i A' }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
-        <tr>
-            <td>Compensation</td>
-            <td>${{ g.compensation }}</td>
-        </tr>
-    </table>
+        <div class="span9">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <td colspan="2"><strong>Study Information</strong></td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Topic</td>
+                    <td>{{ g.topic }}</td>
+                </tr>
+                <tr>
+                    <td class="row-fluid" colspan="2"><div id="map"><div id="mapbox"></div></div></td>
+                </tr>
+                <tr>
+                    <td>Venue</td>
+                    <td><a href="{# url 'groups.views.venue' g.venue.id #}">{{ g.venue }}</a></td>
+                </tr>
+            </table>
 
-    <table class="table table-striped table-hover table-bordered">
-        <thead>
-            <tr>
-                <td colspan="2"><strong>Work Information</strong></td>
-            </tr>
-        </thead>
-        <tr>
-            <td>Co-Op Price</td>
-            <td>${{ g.coop_price }} per spot</td>
-        <tr>
-            <td>Spots</td>
-            <td>{{ g.spots }}</td>
-        </tr>
-    </table>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <td><strong>Other Information</strong></td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Notes</td>
+                    <td>{{ g.notes }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}
 
-    <table class="table table-striped table-hover table-bordered">
-        <thead>
-            <tr>
-                <td><strong>Other Information</strong></td>
-            </tr>
-        </thead>
-        <tr>
-            <td>Notes</td>
-            <td>{{ g.notes }}</td>
-        </tr>
-    </table>
+{% block styles %}
+    <link href="{% static "css/leaflet.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCn9yxcHjsxDYWq3dTH5UZ7MyfleaKY5vA&sensor=false"></script>
+    <script src="{% static "js/leaflet.js" %}"></script>
+    <script src="{% static "js/wax.leaf.min.js" %}"></script>
+    <script src="{% static "js/geo.js" %}"></script>
+
+    <script type="text/javascript">
+        {% with v=g.venue %}
+        var venue = {
+            address : '{{ v.address }}',
+            city    : '{{ v.city }}',
+            state   : '{{ v.state }}',
+            zip     : {{ v.zip_code }},
+            compile : function() {
+                return this.address + ' ' + this.city + ', ' + this.state + ' ' + this.zip;
+            }
+        }
+        {% endwith %}
+
+        var geocode = codeAddress(venue.compile());
+    </script>
 {% endblock %}

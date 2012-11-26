@@ -16,9 +16,11 @@ def index(request):
 
 def study(request, study_id):
     g = get_object_or_404(Study, pk=study_id)
-    #t = Timeslot.objects.select_related().get(id=study_id)
+    t = Timeslot.objects.select_related('study').all()
+    print t
     return render_to_response('groups/study.html', {
         'g': g,
+        'ts': t,
         'view': 'groups'
     }, context_instance=RequestContext(request))
 
