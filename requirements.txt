@@ -1,0 +1,7 @@
+Django
+django-backbone
+django-shortcuts
+django-compass2
+MySQL-python
+South
+pytz
