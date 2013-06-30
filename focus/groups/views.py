@@ -16,7 +16,7 @@ def index(request):
 
 def study(request, study_id):
     g = get_object_or_404(Study, pk=study_id)
-    t = Timeslot.objects.select_related('study').all()
+    t = Timeslot.objects.select_related().filter(study_id=study_id)
     print t
     return render_to_response('groups/study.html', {
         'g': g,
@@ -29,7 +29,7 @@ def edit_study(request, study_id=None, template_name='groups/edit_study.html'):
     # Otherwise, make new objects.
     if study_id:
         study = get_object_or_404(Study, pk=study_id)
-        timeslots = Timeslot.objects.select_related().filter(study_id=study_id)
+        timeslots = Timeslot.objects.select_related().filter(study_id=study.id)
     else:
         study = Study()
 
@@ -41,7 +41,7 @@ def edit_study(request, study_id=None, template_name='groups/edit_study.html'):
             form.save()
 
             # If the save was successful, redirect to another page
-            return HttpResponseRedirect(reverse('groups.views.study', kwargs={'study_id': g.id}))
+            # return HttpResponseRedirect(reverse('groups.views.study', kwargs={'study_id': study.id}))
     else:
         form  = StudyForm(instance=study)
         empty_timeslot_form = TimeslotForm(request.POST)
