@@ -16,8 +16,8 @@ wax.tilejson(url, function(tilejson) {
 var geojsonLayer = new L.GeoJSON();
 
 var MarkerIcon = L.Icon.extend({
-    iconUrl: '/static/img/marker.png',
-    shadowUrl: '/static/img/marker-shadow.png'
+    iconUrl: '/static/images/marker.png',
+    shadowUrl: '/static/images/marker-shadow.png'
 });
 
 // Simple geocoder function from Google
@@ -30,6 +30,7 @@ function codeAddress(address) {
     geocoder.geocode({
         'address': address
     }, function(results, status) {
+        console.log(results);
         if (status == google.maps.GeocoderStatus.OK) {
             result = results[0].geometry.location;
             addToMapBox(map, result);
@@ -43,8 +44,8 @@ function codeAddress(address) {
 
 function addToMapBox(map, result) {
     var g = {
-        lat: result.$a,
-        lng: result.ab
+        lat: result.jb,
+        lng: result.kb
     }
 
     var marker = new L.Marker(new L.LatLng(g.lat, g.lng), {icon: new MarkerIcon()});
