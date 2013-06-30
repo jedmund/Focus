@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load url from future %}
+
+{% block title %}/ {{ v.study }}{% endblock %}
+
+{% block content %}
+    <div class="header row">
+        <h1 class="col col-lg-8">{{ v.name }}</h1>
+        <a class="btn btn-primary btn-large" href="{% url 'groups.views.edit_venue' v.id %}">Edit</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td colspan="2"><strong>Venue Information</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>Name</td>
+            <td>{{ v.name }}</td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td>
+                <a class="visible-desktop" href="callto:{{ v.phone }}">{{ v.phone }}</a>
+                <a class="visible-phone visible-tablet" href="tel:{{ v.phone }}">{{ v.phone }}</a>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td colspan="2"><strong>Location</strong></td>
+            </tr>
+        </thead>
+        <tr>
+            <td class="row" colspan="2"><div id="map"><div id="mapbox"></div></div></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>
+                {{ v.address }}<br />
+                {{ v.city }}, {{ v.state }} {{ v.zip_code }}
+            </td>
+        </tr>
+        <tr>
+            <td>Cross Streets</td>
+            <td>{{ v.cross_st }}</td>
+        </tr>
+    </table>
+{% endblock %}
+
+{% block styles %}
+    <link href="{% static "stylesheets/leaflet.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCn9yxcHjsxDYWq3dTH5UZ7MyfleaKY5vA&sensor=false"></script>
+    <script src="{% static "javascripts/leaflet.js" %}"></script>
+    <script src="{% static "javascripts/wax.leaf.min.js" %}"></script>
+    <script src="{% static "javascripts/geo.js" %}"></script>
+
+    <script type="text/javascript">
+        var venue = {
+            address : '{{ v.address }}',
+            city    : '{{ v.city }}',
+            state   : '{{ v.state }}',
+            zip     : {{ v.zip_code }},
+            compile : function() {
+                return this.address + ' ' + this.city + ', ' + this.state + ' ' + this.zip;
+            }
+        }
+
+        var geocode = codeAddress(venue.compile());
+    </script>
+{% endblock %}

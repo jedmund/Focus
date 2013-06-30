@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load url from future %}
+{% load contacts_extras %}
+
+{% block title %} / Contacts{% endblock %}
+
+{% block content %}
+    <div class="header row">
+        <h1 class="col col-lg-6">All Contacts</h1>
+        <a class="btn btn-primary btn-large" href="{% url 'contacts.views.create' %}">Add a person</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td class="name"><strong>Name</strong></td>
+                <td class="age span1"><strong>Age</strong></td>
+                <td class="phone span2"><strong>Cell Phone</strong></td>
+            </tr>
+        </thead>
+        {% for person in people %}
+                <tr>
+                    <td>
+                        <a href="{% url 'contacts.views.person' person.id %}">{{ person.first_name }} {{ person.last_name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'contacts.views.person' person.id %}">{{ person.age }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'contacts.views.person' person.id %}">{{ person.mobile_phone_no }}</a>
+                    </td>
+                </tr>
+            </a>
+        {% endfor %}
+    </table>
+
+    <div class="pagination">
+        <ul>
+            {% if people.has_previous %}
+                <li><a href="?page={{ people.previous_page_number }}">Prev</a></li>
+            {% endif %}
+
+            {% for i in people.paginator.num_pages|get_range %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+
+            {% if people.has_next %}
+                <li><a href="?page={{ people.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}

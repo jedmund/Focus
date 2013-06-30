@@ -1,0 +1,143 @@
+/* Generic */
+html, body {
+  font-family: "brandon-grotesque", sans-serif;
+  font-size: 18px; }
+
+/* Navbar */
+.navbar {
+  background: #1abc9c;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+  .navbar li a {
+    color: #fff;
+    font-weight: 500; }
+    .navbar li a:hover {
+      background: #16a085; }
+
+.header {
+  border-bottom: 1px solid #1abc9c;
+  padding: 80px 0 10px; }
+  .header .btn {
+    float: right;
+    margin-top: 14px; }
+
+h1 {
+  font-size: 42px;
+  color: #1abc9c; }
+
+.h1-btn {
+  margin: 15px 0; }
+
+/* Tables */
+table {
+  color: #555; }
+  table thead {
+    font-variant: small-caps;
+    text-transform: lowercase;
+    color: #a9a9a9; }
+  table tr td a {
+    display: block;
+    color: inherit;
+    height: 100%;
+    width: 100%; }
+    table tr td a:hover {
+      text-decoration: none; }
+  table tr:hover td a {
+    color: #1abc9c; }
+
+.table.table-paddingless > tr td {
+  padding: 0; }
+
+.table.table-paddingless > tr td a {
+  padding: 8px; }
+
+.table tr td:first-child {
+  width: 140px; }
+
+.table.table-edit > tbody tr td:first-child {
+  line-height: 30px; }
+
+.table tr td {
+  vertical-align: middle; }
+
+.table tr td label {
+  margin-bottom: 0; }
+
+#mapbox .leaflet-control-zoom a {
+  display: inherit;
+  height: 19px;
+  width: 19px; }
+
+.table tr td a:hover {
+  text-decoration: none; }
+
+.table tr td.name {
+  min-width: 160px; }
+
+.table tr td.venue_name {
+  min-width: 220px; }
+
+.table input,
+.table select {
+  margin-bottom: 0; }
+
+.table textarea {
+  height: 100px; }
+
+.table tr td span.label {
+  font-variant: small-caps;
+  padding-bottom: 3px;
+  font-size: 12.844px;
+  margin-left: 10px; }
+
+#mapbox {
+  height: 300px; }
+
+#mapbox img {
+  max-width: none; }
+
+#mapbox label {
+  width: auto;
+  display: inline; }
+
+#mapbox .leaflet-control-attribution {
+  display: none; }
+
+.table td .input-prepend {
+  margin-bottom: 0; }
+
+.table td .input-prepend .add-on {
+  min-width: 40px; }
+
+.table td .input-prepend input {
+  width: 155px; }
+
+.table td .input-append {
+  margin-bottom: 0; }
+
+.table td .input-append .add-on {
+  min-width: 40px; }
+
+.table td .input-append input {
+  width: 155px; }
+
+.table td .input-prepend.datepicker {
+  margin-bottom: 10px;
+  padding: 0; }
+
+.focus-sidenav > li:first-child > a {
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 0 0; }
+
+.focus-sidenav > li > a {
+  border: 1px solid #E5E5E5;
+  padding: 8px 14px;
+  margin: 0 0 -1px;
+  width: 190px 9;
+  display: block; }
+
+.focus-sidenav .icon-chevron-right {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px;
+  opacity: .25; }

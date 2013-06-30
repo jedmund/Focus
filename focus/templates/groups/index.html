@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load url from future %}
+
+{% block title %} / Groups{% endblock %}
+
+{% block content %}
+    <div class="header row">
+        <h1 class="col col-lg-6">All Groups</h1>
+        <a class="btn btn-primary btn-large" href="{% url 'create_study' %}">Add a group</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td class="topic"><strong>Topic</strong></td>
+                <td class="venue"><strong>Venue</strong></td>
+                <td class="date span2"><strong>Date</strong></td>
+            </tr>
+        </thead>
+        {% for study in studies %}
+                <tr>
+                    <td>
+                        <a href="{% url 'view_study' study.id %}">{{ study.topic }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'view_study' study.id %}"></a>
+                    </td>
+                    <td>
+                        <a href="{% url 'view_study' study.id %}"></a>
+                    </td>
+                </tr>
+            </a>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load url from future %}
+
+{% block title %} / Groups / Venues{% endblock %}
+
+{% block content %}
+    <div class="header row">
+        <h1 class="col col-lg-6">All Venues</h1>
+        <a class="btn btn-primary btn-large" href="{% url 'groups.views.create_venue' %}">Add a venue</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td class="venue_name"><strong>Name</strong></td>
+                <td class="address"><strong>Address</strong></td>
+                <td class="date span2"><strong>Phone Number</strong></td>
+            </tr>
+        </thead>
+        {% for venue in venues %}
+                <tr>
+                    <td>
+                        <a href="{% url 'groups.views.venue' venue.id %}">{{ venue.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'groups.views.venue' venue.id %}">{{ venue.address }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'groups.views.venue' venue.id %}">{{ venue.phone }}</a>
+                    </td>
+                </tr>
+            </a>
+        {% endfor %}
+    </table>
+{% endblock %}

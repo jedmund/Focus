@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% load url from future %}
+
+{% block title %}/ {% if p %}{{ p.first_name }} {{ p.last_name }}{% else %}Create{% endif %}{% endblock %}
+
+{% block content %}
+    <div class="header row">
+        {% if p %}
+            <h1 class="col col-lg-8">Editing {{ p.first_name }} {{ p.last_name }}</h1>
+        {% else %}
+            <h1 class="col col-lg-8">Add new person</h1>
+        {% endif %}
+        <a class="btn btn-primary btn-large" href="{% url 'contacts.views.create' %}">Save</a>
+    </div>
+
+    <form action="{% if p %}{% url 'edit' p.id %}{% else %}{% url 'create' %}{% endif %}" method="post">
+        {% csrf_token %}
+        <table class="table table-edit">
+            <thead>
+                <tr>
+                    <td colspan="2"><strong>Name</strong></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>First Name</td>
+                <td>{{ form.first_name }}<span class="label">required</span></td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>{{ form.last_name }}<span class="label">required</span></td>
+            </tr>
+        </table>
+        <table class="table table-edit">
+            <thead>
+                <tr>
+                    <td colspan="2"><strong>Personal Information</strong></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Birthdate</td>
+                <td>{{ form.birthdate }}<span class="label">required</span></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>{{ form.gender }}<span class="label">required</span></td>
+            </tr>
+            <tr>
+                <td>Ethnicity</td>
+                <td>{{ form.ethnicity }}<span class="label">required</span></td>
+            </tr>
+        </table>
+        <table class="table table-edit">
+            <thead>
+                <tr>
+                    <td colspan="2"><strong>Work Information</strong></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Employer</td>
+                <td>{{ form.employer }}</td>
+            </tr>
+            <tr>
+                <td>Occupation</td>
+                <td>{{ form.occupation }}<span class="label">required</span></td>
+            </tr>
+        </table>
+        <table class="table table-edit">
+            <thead>
+                <tr>
+                    <td colspan="2"><strong>Contact Information</strong></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Email Address</td>
+                <td>{{ form.email }}</td>
+            </tr>
+            <tr>
+                <td>Home Phone</td>
+                <td>
+                    {{ form.home_phone_no }}
+                </td>
+            </tr>
+            <tr>
+                <td>Cell Phone</td>
+                <td>
+                    {{ form.mobile_phone_no }}<span class="label">required</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Work Phone</td>
+                <td>
+                    {{ form.work_phone_no }}
+                </td>
+            </tr>
+        </table>
+        <table class="table table-edit">
+            <thead>
+                <tr>
+                    <td colspan="2"><strong>Residential Information</strong></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>City</td>
+                <td>{{ form.city }}<span class="label">required</span></td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>{{ form.state }}<span class="label">required</span></td>
+            </tr>
+        </table>
+        <table class="table table-edit">
+            <thead>
+                <tr>
+                    <td colspan="2"><strong>Cell Phone Information</strong></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Cell Phone Provider</td>
+                <td>{{ form.cell_provider }}</td>
+            </tr>
+            <tr>
+                <td>Cell Phone Make</td>
+                <td>{{ form.cell_make }}</td>
+            </tr>
+            <tr>
+                <td>Cell Phone Model</td>
+                <td>{{ form.cell_model }}</td>
+            </tr>
+        </table>
+        <table class="table table-edit">
+            <thead>
+                <tr>
+                    <td colspan="2"><strong>Car Information</strong></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Car Make</td>
+                <td>{{ form.car_make }}</td>
+            </tr>
+            <tr>
+                <td>Car Model</td>
+                <td>{{ form.car_model }}</td>
+            </tr>
+            <tr>
+                <td>Car Year</td>
+                <td>{{ form.car_year }}</td>
+            </tr>
+        </table>
+        <table class="table hidden">
+            <thead>
+                <tr>
+                    <td colspan="2"><strong>Sourcing Information</strong></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Method</td>
+                <td>{{ form.add_method }}</td>
+            </tr>
+        </table>
+    </form>
+    <a class="btn btn-primary btn-large" href="{% url 'contacts.views.create' %}">Save</a>
+{% endblock %}
