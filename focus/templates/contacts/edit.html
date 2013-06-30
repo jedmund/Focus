@@ -24,11 +24,11 @@
             </thead>
             <tr>
                 <td>First Name</td>
-                <td>{{ form.first_name }}<span class="label">required</span></td>
+                <td>{{ form.first_name }}<i class="glyphicon glyphicon-exclamation-sign"></i></td>
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td>{{ form.last_name }}<span class="label">required</span></td>
+                <td>{{ form.last_name }}<i class="glyphicon glyphicon-exclamation-sign"></i></td>
             </tr>
         </table>
         <table class="table table-edit">
@@ -39,15 +39,15 @@
             </thead>
             <tr>
                 <td>Birthdate</td>
-                <td>{{ form.birthdate }}<span class="label">required</span></td>
+                <td>{{ form.birthdate }}<i class="glyphicon glyphicon-exclamation-sign"></i></td>
             </tr>
             <tr>
                 <td>Gender</td>
-                <td>{{ form.gender }}<span class="label">required</span></td>
+                <td class="flex">{{ form.gender }}<i class="glyphicon glyphicon-exclamation-sign"></i></td>
             </tr>
             <tr>
                 <td>Ethnicity</td>
-                <td>{{ form.ethnicity }}<span class="label">required</span></td>
+                <td class="flex">{{ form.ethnicity }}<i class="glyphicon glyphicon-exclamation-sign"></i></td>
             </tr>
         </table>
         <table class="table table-edit">
@@ -62,7 +62,7 @@
             </tr>
             <tr>
                 <td>Occupation</td>
-                <td>{{ form.occupation }}<span class="label">required</span></td>
+                <td>{{ form.occupation }}<i class="glyphicon glyphicon-exclamation-sign"></i></td>
             </tr>
         </table>
         <table class="table table-edit">
@@ -83,8 +83,8 @@
             </tr>
             <tr>
                 <td>Cell Phone</td>
-                <td>
-                    {{ form.mobile_phone_no }}<span class="label">required</span>
+                <td class="flex">
+                    {{ form.mobile_phone_no }}<i class="glyphicon glyphicon-exclamation-sign"></i>
                 </td>
             </tr>
             <tr>
@@ -102,11 +102,11 @@
             </thead>
             <tr>
                 <td>City</td>
-                <td>{{ form.city }}<span class="label">required</span></td>
+                <td>{{ form.city }}<i class="glyphicon glyphicon-exclamation-sign"></i></td>
             </tr>
             <tr>
                 <td>State</td>
-                <td>{{ form.state }}<span class="label">required</span></td>
+                <td class="flex">{{ form.state }}<i class="glyphicon glyphicon-exclamation-sign"></i></td>
             </tr>
         </table>
         <table class="table table-edit">

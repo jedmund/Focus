@@ -35,19 +35,17 @@
         {% endfor %}
     </table>
 
-    <div class="pagination">
-        <ul>
-            {% if people.has_previous %}
-                <li><a href="?page={{ people.previous_page_number }}">Prev</a></li>
-            {% endif %}
+    <ul class="pagination pagination-large center">
+        {% if people.has_previous %}
+            <li><a href="?page={{ people.previous_page_number }}">Prev</a></li>
+        {% endif %}
 
-            {% for i in people.paginator.num_pages|get_range %}
-                <li><a href="?page={{ i }}">{{ i }}</a></li>
-            {% endfor %}
+        {% for i in people.paginator.num_pages|get_range %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endfor %}
 
-            {% if people.has_next %}
-                <li><a href="?page={{ people.next_page_number }}">Next</a></li>
-            {% endif %}
-        </ul>
-    </div>
+        {% if people.has_next %}
+            <li><a href="?page={{ people.next_page_number }}">Next</a></li>
+        {% endif %}
+    </ul>
 {% endblock %}

@@ -46,10 +46,12 @@
                 {{ v.city }}, {{ v.state }} {{ v.zip_code }}
             </td>
         </tr>
+        {% if v.cross_st %}
         <tr>
             <td>Cross Streets</td>
             <td>{{ v.cross_st }}</td>
         </tr>
+        {% endif %}
     </table>
 {% endblock %}
 

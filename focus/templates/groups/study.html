@@ -13,17 +13,17 @@
 
     <div class="row">
         <div class="col col-lg-3 focus-sidebar">
-            <ul class="nav nav-list focus-sidenav affix-top">
+            <ul class="focus-nav nav affix-top">
                 <li class="active">
                     <a href="#info">
-                        <i class="icon-chevron-right"></i>
+                        <span class="glyphicon-chevron-right"></span>
                         Group Information
                     </a>
                 </li>
                 {% for t in ts %}
                     <li>
                         <a href="#{{ t.id }}">
-                            <i class="icon-chevron-right"></i>
+                            <i class="glyphicon-chevron-right"></i>
                             {{ t.datetime|date:'F j, Y h:i A' }}
                         </a>
                     </li>
