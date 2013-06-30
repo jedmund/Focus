@@ -128,6 +128,8 @@ table {
       margin-bottom: 0;
       font-size: 18px !important;
       padding-top: 10px !important; }
+    table tr td .input-group {
+      border-collapse: separate; }
   table tr:hover td a {
     color: #1abc9c; }
   table .glyphicon {
@@ -150,6 +152,7 @@ table {
   vertical-align: middle; }
 
 .table tr td label {
+  font-weight: normal;
   margin-bottom: 0; }
 
 #mapbox .leaflet-control-zoom a {
@@ -164,7 +167,10 @@ table {
   min-width: 160px; }
 
 .table tr td.venue_name {
-  min-width: 220px; }
+  min-width: 350px; }
+
+.table tr td.address {
+  width: 300px; }
 
 .table textarea {
   height: 100px; }
