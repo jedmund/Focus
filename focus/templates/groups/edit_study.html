@@ -33,9 +33,9 @@
                     <label for="id_{{ empty_slot.duration.html_name }}">Study Duration</label>
                 </td>
                 <td>
-                    <div class="input-append">
+                    <div class="input-group">
                         {{ empty_slot.duration }}
-                        <span class="add-on">mins</span>
+                        <span class="input-group-addon">mins</span>
                     </div>
                 </td>
             </tr>
@@ -44,8 +44,8 @@
                     <label for="id_{{ empty_slot.compensation.html_name }}">Participant Compensation</label>
                 </td>
                 <td>
-                    <div class="input-prepend">
-                        <span class="add-on">$</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
                         {{ empty_slot.compensation }}
                     </div>
                 </td>
@@ -55,8 +55,8 @@
                     <label for="id_{{ empty_slot.coop_price.html_name }}">Co-op Price</label>
                 </td>
                 <td>
-                    <div class="input-prepend">
-                        <span class="add-on">$</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
                         {{ empty_slot.coop_price }}
                     </div>
                 </td>
@@ -66,8 +66,8 @@
                     <label for="id_{{ empty_slot.spots.html_name }}">Spots</label>
                 </td>
                 <td>
-                    <div class="input-prepend">
-                        <span class="add-on">#</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">#</span>
                         {{ empty_slot.spots }}
                     </div>
                 </td>
@@ -175,9 +175,9 @@
 
                 $('.timeslot-adder').before(template);
                 var timeslot = $('.timeslot').last();
-                makeDateTimeSlot();
-                numberTimeslotFields($(timeslot), $('.timeslot').size()-1);
-                $('#id_timeslot_count').val(parseInt($('#id_timeslot_count').val())+1);
+                // makeDateTimeSlot();
+                // numberTimeslotFields($(timeslot), $('.timeslot').size()-1);
+                // $('#id_timeslot_count').val(parseInt($('#id_timeslot_count').val())+1);
             }
 
             var numberElemLabel = function(elem, i) {

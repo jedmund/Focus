@@ -15,6 +15,7 @@
         <thead>
             <tr>
                 <td class="name"><strong>Name</strong></td>
+                <td class="gender"><strong>Gender</strong></td>
                 <td class="age span1"><strong>Age</strong></td>
                 <td class="phone span2"><strong>Cell Phone</strong></td>
             </tr>
@@ -23,6 +24,15 @@
                 <tr>
                     <td>
                         <a href="{% url 'contacts.views.person' person.id %}">{{ person.first_name }} {{ person.last_name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'contacts.views.person' person.id %}">
+                            {% if person.gender > 1 %}
+                                Female
+                            {% else %}
+                                Male
+                            {% endif %}
+                        </a>
                     </td>
                     <td>
                         <a href="{% url 'contacts.views.person' person.id %}">{{ person.age }}</a>
