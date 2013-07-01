@@ -158,6 +158,14 @@
                 <td>{{ form.add_method }}</td>
             </tr>
         </table>
+
+        <table class="table">
+            <tr>
+                <td></td>
+                <td>
+                    <a class="btn btn-primary btn-large" href="{% url 'contacts.views.create' %}">Save</a>
+                </td>
+            </tr>
+        </table>
     </form>
-    <a class="btn btn-primary btn-large" href="{% url 'contacts.views.create' %}">Save</a>
 {% endblock %}

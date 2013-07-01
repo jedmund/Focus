@@ -24,15 +24,21 @@ input[type="color"]:focus {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(26, 188, 156, 0.6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(26, 188, 156, 0.6); }
 
+label {
+  font-weight: normal; }
+
 /* Navbar */
 .navbar {
   background: #1abc9c;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  height: 40px; }
   .navbar li a {
     color: #fff;
     font-weight: 500; }
     .navbar li a:hover {
       background: #16a085; }
+    .navbar li a.active {
+      background: #ef8b80; }
 
 .header {
   border-bottom: 1px solid #1abc9c;
@@ -67,7 +73,7 @@ h1 {
       color: #fff;
       padding: 15px 10px; }
       .focus-sidebar .focus-nav li a:hover {
-        background: #ea6153; }
+        background: #f29f97; }
 
 /* Pagination */
 .pagination.center,
@@ -82,15 +88,15 @@ h1 {
   left: -50%; }
 
 /* Tables */
-table {
+.table {
   color: #555; }
-  table thead {
+  .table > thead {
     font-variant: small-caps;
     text-transform: lowercase;
     color: #a9a9a9; }
-  table tr td {
+  .table > tbody:not(.calendar) tr td {
     position: relative; }
-    table tr td.flex {
+    .table > tbody:not(.calendar) tr td.flex {
       display: -webkit-box;
       -webkit-box-direction: normal;
       -webkit-box-orient: horizontal;
@@ -101,38 +107,49 @@ table {
       -webkit-align-content: stretch;
       -webkit-box-align: start;
       -webkit-align-items: flex-start; }
-      table tr td.flex select {
+      .table > tbody:not(.calendar) tr td.flex select {
         margin-right: 42px;
         -webkit-box-ordinal-group: 2;
         -webkit-order: 1;
         -webkit-box-flex: 2;
         -webkit-flex: 2 1 auto;
         -webkit-align-self: stretch; }
-      table tr td.flex i {
+      .table > tbody:not(.calendar) tr td.flex i {
         -webkit-box-ordinal-group: 3;
         -webkit-order: 2;
         -webkit-box-flex: 0;
         -webkit-flex: 0 1 auto;
         -webkit-align-self: auto; }
-    table tr td:first-child {
+    .table > tbody:not(.calendar) tr td:first-child {
       vertical-align: middle;
       width: 200px; }
-    table tr td a {
+    .table > tbody:not(.calendar) tr td a {
       display: block;
       color: inherit;
       height: 100%;
       width: 100%; }
-      table tr td a:hover {
+      .table > tbody:not(.calendar) tr td a:hover {
         text-decoration: none; }
-    table tr td input, table tr td select {
+    .table > tbody:not(.calendar) tr td input, .table > tbody:not(.calendar) tr td select {
       margin-bottom: 0;
       font-size: 18px !important;
       padding-top: 10px !important; }
-    table tr td .input-group {
+    .table > tbody:not(.calendar) tr td span.label {
+      font-variant: small-caps;
+      padding-bottom: 3px;
+      font-size: 12.844px;
+      margin-left: 10px; }
+    .table > tbody:not(.calendar) tr td strong {
+      vertical-align: middle; }
+    .table > tbody:not(.calendar) tr td .btn {
+      color: #fff; }
+    .table > tbody:not(.calendar) tr td .input-group {
       border-collapse: separate; }
-  table tr:hover td a {
+  .table > tbody:not(.calendar) tr:hover td a:not(.btn) {
     color: #1abc9c; }
-  table .glyphicon {
+  .table > tbody.calendar {
+    border: 0; }
+  .table .glyphicon {
     color: #1abc9c;
     margin-top: -8px;
     position: absolute;
@@ -148,10 +165,10 @@ table {
 .table.table-edit > tbody tr td:first-child {
   line-height: 30px; }
 
-.table tr td {
+.table > tr td {
   vertical-align: middle; }
 
-.table tr td label {
+.table > tr td label {
   font-weight: normal;
   margin-bottom: 0; }
 
@@ -160,26 +177,20 @@ table {
   height: 19px;
   width: 19px; }
 
-.table tr td a:hover {
+.table > tr td a:hover {
   text-decoration: none; }
 
-.table tr td.name {
+.table > tr td.name {
   min-width: 160px; }
 
-.table tr td.venue_name {
+.table > tr td.venue_name {
   min-width: 350px; }
 
-.table tr td.address {
+.table > tr td.address {
   width: 300px; }
 
-.table textarea {
+.table > textarea {
   height: 100px; }
-
-.table tr td span.label {
-  font-variant: small-caps;
-  padding-bottom: 3px;
-  font-size: 12.844px;
-  margin-left: 10px; }
 
 #mapbox {
   height: 300px; }
@@ -194,27 +205,8 @@ table {
 #mapbox .leaflet-control-attribution {
   display: none; }
 
-.table td .input-prepend {
-  margin-bottom: 0; }
-
-.table td .input-prepend .add-on {
-  min-width: 40px; }
-
-.table td .input-prepend input {
-  width: 155px; }
-
-.table td .input-append {
-  margin-bottom: 0; }
-
-.table td .input-append .add-on {
-  min-width: 40px; }
-
-.table td .input-append input {
-  width: 155px; }
-
-.table td .input-prepend.datepicker {
-  margin-bottom: 10px;
-  padding: 0; }
+.add-timeslot-btn {
+  float: right; }
 
 .focus-sidenav > li:first-child > a {
   -webkit-border-radius: 6px 6px 0 0;

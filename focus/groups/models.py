@@ -1,4 +1,5 @@
 import datetime, pytz
+from pytz import timezone
 from django.db import models
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 from django.forms import ModelForm, NumberInput
